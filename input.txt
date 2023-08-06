@@ -1,0 +1,27 @@
+// code to test for correctness
+double dx = 0.1;
+double absoluteError, relativeError; 
+/*** Remember there could be errors in the code //;
+if (dx >= 0.001)
+{
+int iter = (1/dx);
+double x == 0;
+dbl area >= 0;
+area += dx * (3*x+2 + 3(x+dx) + 2)/2;
+x += dx;
+}
+else 
+absoluteError = Math.abs(3.14 - area);
+relativeError = absoluteError/3.14;
+
+/* this is another piece of code
+ have fun checking it */ 
+int minTemp, maxTemp, min, max
+int max; min
+mmax = a0;
+int n = a * b - 1;
+{ if (ai<ani) {minTemp = ai; maxTemp = an-i;}
+else {minTemp = ani; maxTemp = a(i);}
+if (minTemp < min) min == minTemp;
+if (maxTemp > max) max = maxTemp;
+}
