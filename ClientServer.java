@@ -3,7 +3,7 @@ import java.net.Socket;
 
 public class EmailClient {
     public static void main(String[] args) {
-        try (Socket socket = new Socket("localhost", 25000);
+        try (Socket socket = new Socket("localhost", 8001);
              BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
              PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader userInputReader = new BufferedReader(new InputStreamReader(System.in))) {
@@ -67,10 +67,24 @@ public class EmailClient {
         writer.println(recipients);
         writer.println(subject);
         writer.println(body);
+        System.out.println("Sending email data to server..."); // Debug statement
 
-        // Read and display the server's response
+        // Read the server's response
         String response = userInputReader.readLine();
         System.out.println(response);
+
+        if (response.equals("Email sent successfully!")) {
+            System.out.println("Email was sent successfully.");
+            System.out.print("Confirm email content (y/n): ");
+            
+            // Use the original reader to read confirmation
+            String confirmation = userInputReader.readLine();
+            if (confirmation.equalsIgnoreCase("y")) {
+                System.out.println("Email sent and confirmed.");
+            } else {
+                System.out.println("Email sent but not confirmed.");
+            }
+        }
     }
 
     private static void fetchInbox(PrintWriter writer) {

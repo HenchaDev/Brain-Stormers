@@ -10,13 +10,13 @@ public class EmailServer {
     private static Map<String, StringBuilder> userInboxes = new HashMap<>();
 
     public static void main(String[] args) {
-        // Initialize users (Replace with database implementation)
+        // Initialize users (You can replace it with database implementation)
         users.put("user1@example.com", "password1");
         users.put("user2@example.com", "password2");
 
         try {
-            ServerSocket serverSocket = new ServerSocket(25000);
-            System.out.println("Email Server started on port 25000...");
+            ServerSocket serverSocket = new ServerSocket(8001);
+            System.out.println("Email Server started on port 8001...");
 
             while (true) {
                 Socket clientSocket = serverSocket.accept();
@@ -59,6 +59,8 @@ public class EmailServer {
         return users.containsKey(email) && users.get(email).equals(password);
     }
 
+
+
     private static void handleEmailClient(BufferedReader reader, PrintWriter writer, String email) throws IOException {
         writer.println("Welcome to Umail! You are logged in as " + email);
         while (true) {
@@ -67,6 +69,8 @@ public class EmailServer {
                 String recipients = reader.readLine();
                 String subject = reader.readLine();
                 String body = reader.readLine();
+                
+                System.out.println("Received SEND command"); // Debug statement
 
                 String messageId = generateMessageId();
                 String message = "From: " + email + "\r\n" +
@@ -80,6 +84,8 @@ public class EmailServer {
                 storeInInbox(recipients, message);
 
                 writer.println("Email sent successfully!");
+                writer.flush();
+                System.out.println("Email sent response sent to client"); // Debug statement
             } else if (clientRequest.equals("FETCH")) {
                 StringBuilder inbox = userInboxes.getOrDefault(email, new StringBuilder());
                 writer.println(inbox.toString());
@@ -90,6 +96,8 @@ public class EmailServer {
             }
         }
     }
+
+
 
     private static void storeInInbox(String recipients, String message) {
         String[] recipientList = recipients.split(",");
